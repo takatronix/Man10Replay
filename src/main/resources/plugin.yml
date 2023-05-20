@@ -1,0 +1,10 @@
+name: Man10Replay
+version: '1.0'
+main: red.man10.replay.Main
+api-version: 1.19
+authors: [takatronix]
+description: Minecraft Man10 Replay System
+website: https://man10.red
+commands:
+  mreplay:
+    default: op
