@@ -31,6 +31,7 @@ class Main : JavaPlugin() ,Listener {
         var duration = 3600
         var enabled = true
         var lastMin = -1
+        var minList = mutableListOf<Int>()
     }
 
     override fun onEnable() {
@@ -52,15 +53,16 @@ class Main : JavaPlugin() ,Listener {
                 return@scheduleSyncRepeatingTask
             }
 
-            // 0分になった瞬間に処理を行う
-            if(min == 0){
+            // minListに一致する分になったら記録を開始する
+            if(minList.contains(min)){
                 // 現在の時刻でyyyymmdd_hh という形式でファイル名を作成する　month,day,hoursは01,02という形式になる
                 val date = Calendar.getInstance()
-                val fileName = String.format("%04d%02d%02d_%02d",date.get(Calendar.YEAR),date.get(Calendar.MONTH)+1,date.get(Calendar.DAY_OF_MONTH),date.get(Calendar.HOUR_OF_DAY))
+                val fileName = String.format("%04d%02d%02d_%02d%02d",date.get(Calendar.YEAR),date.get(Calendar.MONTH)+1,date.get(Calendar.DAY_OF_MONTH),date.get(Calendar.HOUR_OF_DAY),date.get(Calendar.MINUTE))
 
                 info("記録開始 $fileName")
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"replay start ${fileName}:${duration}")
             }
+
             lastMin = min
         }, 0L, 20L)
 
@@ -71,6 +73,7 @@ class Main : JavaPlugin() ,Listener {
         reloadConfig()
         enabled =  config.getBoolean("enabled")
         duration = config.getInt("duration")
+        minList = config.getIntegerList("minList").toMutableList()
     }
 
 }

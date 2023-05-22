@@ -1,2 +1,3 @@
 enabled: true
-duration: 3600
+duration: 900
+minList: [0, 15, 30, 45]
