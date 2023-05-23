@@ -28,7 +28,7 @@ class Main : JavaPlugin() ,Listener {
         val version = "2023/4/10"
         val prefix = "§6[§dMan10Replay§6]§f"
         lateinit var plugin: JavaPlugin
-        var duration = 3600
+        var duration = 900
         var enabled = true
         var lastMin = -1
         var minList = mutableListOf<Int>()
@@ -57,7 +57,13 @@ class Main : JavaPlugin() ,Listener {
             if(minList.contains(min)){
                 // 現在の時刻でyyyymmdd_hh という形式でファイル名を作成する　month,day,hoursは01,02という形式になる
                 val date = Calendar.getInstance()
-                val fileName = String.format("%04d%02d%02d_%02d%02d",date.get(Calendar.YEAR),date.get(Calendar.MONTH)+1,date.get(Calendar.DAY_OF_MONTH),date.get(Calendar.HOUR_OF_DAY),date.get(Calendar.HOUR),min)
+                val fileName = String.format("%04d%02d%02d_%02d%02d"
+                    ,date.get(Calendar.YEAR)
+                    ,date.get(Calendar.MONTH)+1
+                    ,date.get(Calendar.DAY_OF_MONTH)
+                    ,date.get(Calendar.HOUR_OF_DAY)
+                    ,min
+                )
 
                 info("記録開始 $fileName")
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"replay start ${fileName}:${duration}")
